@@ -62,3 +62,48 @@ create table Sales.Customer(
 	CONSTRAINT FK_StoreID FOREIGN KEY (StoreID) REFERENCES Sales.Store(BusinessEntityID),
 	CONSTRAINT FK_TerritoryIDCustomer FOREIGN KEY (TerritoryID) REFERENCES Sales.SalesTerritory(TerritoryID)
 );
+
+--Para America
+insert into LSERVER1.America.Sales.SalesTerritory
+select * 
+from AdventureWorks2019.Sales.SalesTerritory
+where TerritoryID = 1 or TerritoryID = 2 or TerritoryID = 3 or TerritoryID = 4 or TerritoryID = 5 or TerritoryID = 6 
+
+
+insert into LSERVER1.America.Sales.SalesPerson
+select * 
+from AdventureWorks2019.Sales.SalesPerson
+where TerritoryID = 1 or TerritoryID = 2 or TerritoryID = 3 or TerritoryID = 4 or TerritoryID = 5 or TerritoryID = 6 
+
+
+insert into LSERVER1.America.Sales.Store
+select S.BusinessEntityID,S."Name",S.SalesPersonID,S.rowguid,S.ModifiedDate from AdventureWorks2019.Sales.Store S
+join AdventureWorks2019.Sales.SalesPerson P
+on S.SalesPersonID = P.BusinessEntityID
+where TerritoryID = 1 or TerritoryID = 2 or TerritoryID = 3 or TerritoryID = 4 or TerritoryID = 5 or TerritoryID = 6 
+
+
+insert into LSERVER1.America.Sales.Customer
+select * from AdventureWorks2019.Sales.Customer
+where TerritoryID = 1 or TerritoryID = 2 or TerritoryID = 3 or TerritoryID = 4 or TerritoryID = 5 or TerritoryID = 6 
+
+
+
+--Para el Resto del Mundo
+INSERT INTO OPENQUERY (MYSQLODBC, 'SELECT * FROM RMundo.SalesTerritory')
+select * from AdventureWorks2019.Sales.SalesTerritory
+where TerritoryID = 7 or TerritoryID = 8 or TerritoryID = 9 or TerritoryID = 10
+
+INSERT INTO OPENQUERY (MYSQLODBC, 'SELECT * FROM RMundo.SalesPerson')
+select * from AdventureWorks2019.Sales.SalesPerson
+where TerritoryID = 7 or TerritoryID = 8 or TerritoryID = 9 or TerritoryID = 10
+
+INSERT INTO OPENQUERY (MYSQLODBC, 'SELECT * FROM RMundo.Store')
+select S.BusinessEntityID,S."Name",S.SalesPersonID,S.rowguid,S.ModifiedDate from AdventureWorks2019.Sales.Store S
+join AdventureWorks2019.Sales.SalesPerson P
+on S.SalesPersonID = P.BusinessEntityID
+where TerritoryID = 7 or TerritoryID = 8 or TerritoryID = 9 or TerritoryID = 10
+
+INSERT INTO OPENQUERY (MYSQLODBC, 'SELECT * FROM RMundo.Customer')
+select * from AdventureWorks2019.Sales.Customer
+where TerritoryID = 7 or TerritoryID = 8 or TerritoryID = 9 or TerritoryID = 10
