@@ -51,3 +51,9 @@ create table Customer(
 	CONSTRAINT FK_StoreID FOREIGN KEY (StoreID) REFERENCES Store(BusinessEntityID),
 	CONSTRAINT FK_TerritoryIDCustomer FOREIGN KEY (TerritoryID) REFERENCES SalesTerritory(TerritoryID)
 );
+
+use rmundo
+select * from salesterritory
+select * from salesperson
+select * from store
+select * from customer

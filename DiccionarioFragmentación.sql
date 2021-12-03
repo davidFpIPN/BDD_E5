@@ -13,6 +13,7 @@ CREATE TABLE val_col_frag (
   primary key (id_fragmento, val_col),
   foreign KEY (id_fragmento) REFERENCES diccionario_dist (id_fragmento)
 )
+
 delete diccionario_dist
 delete val_col_frag
 /* Fragmentos de la BDD */
@@ -44,3 +45,4 @@ insert into val_col_frag values (2,'10');
 select * from diccionario_dist;
 
 select * from val_col_frag;
+

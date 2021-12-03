@@ -1,22 +1,22 @@
 use AdventureWorks2019; 
 
 -- Consulta 1 
-	-- -Saber/Listar qué territorios generan más de 6 millones de dólares durante este año 
+	-- -Saber/Listar quï¿½ territorios generan mï¿½s de 6 millones de dï¿½lares durante este aï¿½o 
 	select * from Sales.SalesTerritory where SalesYTD >= 6000000; 
 
 
 
 -- Consulta 2
-	-- Saber/Listar en qué territorios se vendió más de 3 millones el año pasado
+	-- Saber/Listar en quï¿½ territorios se vendiï¿½ mï¿½s de 3 millones el aï¿½o pasado
 	select * from Sales.SalesTerritory where SalesLastYear > 3000000; 
 
 
 -- Consulta 4
-	-- -Saber qué encargado regional cuenta con más bonos
+	-- -Saber quï¿½ encargado regional cuenta con mï¿½s bonos
 	select BusinessEntityID from Sales.SalesPerson where Bonus= (select max(Bonus) from Sales.SalesPerson);
 
 -- Consulta 5
-	--  Actualizar en la tabla Sales.SalesTerritory el valor de groy = “North America” por “America”	
+	--  Actualizar en la tabla Sales.SalesTerritory el valor de groy = ï¿½North Americaï¿½ por ï¿½Americaï¿½	
 	select * from Sales.SalesTerritory; 
 	select COUNT(*) as total_America from Sales.SalesTerritory where "Group"= 'America';
 	update Sales.SalesTerritory
@@ -31,7 +31,7 @@ use AdventureWorks2019;
 
 
 -- Consulta 7
-	-- Modificar/Actualizar el nombre de la tienda “Tire Company” por “Wire Company”
+	-- Modificar/Actualizar el nombre de la tienda ï¿½Tire Companyï¿½ por ï¿½Wire Companyï¿½
 	Update AdventureWorks2019.Sales.Store
 	set Name = 'Tired Company' from AdventureWorks2019.Sales.Store
 	where Name = 'Tire Company'
@@ -39,8 +39,8 @@ use AdventureWorks2019;
 
 
 -- Consulta 8
-	-- 8. Listar los usuarios que reciben promoción por email (“EmailPromotion” de la tabla Person.Person) 
-	-- que tengan tarjeta de crédito “ColonialVoice” (Incolucra tabla Sales.CreditCard y Sales.PersonCreditCard)
+	-- 8. Listar los usuarios que reciben promociï¿½n por email (ï¿½EmailPromotionï¿½ de la tabla Person.Person) 
+	-- que tengan tarjeta de crï¿½dito ï¿½ColonialVoiceï¿½ (Incolucra tabla Sales.CreditCard y Sales.PersonCreditCard)
 
 
 	select * from Person.Person; 
@@ -55,7 +55,7 @@ use AdventureWorks2019;
 		where Sales.CreditCard.CardType = 'ColonialVoice' and Person.Person.EmailPromotion = 1;
 
 -- Consulta 9
-	--9.-Modificar el bono del encargado regional que tenga el mayor número de ventas de este año.
+	--9.-Modificar el bono del encargado regional que tenga el mayor nï¿½mero de ventas de este aï¿½o.
 		update Sales.SalesPerson 
 		set Bonus = 8000.00 
 		where SalesYTD =(select max(SalesYTD) MayorVentas from Sales.SalesPerson);
@@ -63,7 +63,7 @@ use AdventureWorks2019;
 		select * from Sales.SalesPerson where SalesYTD =(select max(SalesYTD) MayorVentas from Sales.SalesPerson); 
 
 -- Consulta 10
-	-- Modificar/Actualizar el bono de un encargado regional que no haya vendido nada el año pasado.
+	-- Modificar/Actualizar el bono de un encargado regional que no haya vendido nada el aï¿½o pasado.
 		update Sales.SalesPerson 
 		set Bonus = 1000.00
 		where SalesYTD =(select min(SalesYTD) MayorVentas from Sales.SalesPerson); 
@@ -79,8 +79,8 @@ use AdventureWorks2019;
 -- Consulta 12
 	-- Listar las tiendas al cargo del encargado regional (SalesPerson) con ID 275
 	select * from Sales.SalesTerritory; 
-	select * from Sales.Store; -- las tiendas que tiene un dueño 
-	select * from Sales.SalesPerson; -- dueño regionales 
+	select * from Sales.Store; -- las tiendas que tiene un dueï¿½o 
+	select * from Sales.SalesPerson; -- dueï¿½o regionales 
 
 
 	select Sales.Store.BusinessEntityID, Sales.Store.Name, Sales.SalesPerson.BusinessEntityID
@@ -93,7 +93,7 @@ use AdventureWorks2019;
 	DELETE FROM Sales.SalesOrderDetail WHERE ProductID Between 740 and 750;
 
 -- Consulte 14 
-	-- .Eliminar cliente con número de cuenta AW00000001
+	-- .Eliminar cliente con nï¿½mero de cuenta AW00000001
 	delete from Sales.Customer where AccountNumber='AW00000001'
 
 
