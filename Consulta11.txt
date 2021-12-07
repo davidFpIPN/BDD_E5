@@ -17,9 +17,9 @@ begin
 		set @i = @i+1;
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
 		
-		if @servidor='SQLMYSQL'
+		if @servidor='LSERVER1'
 		begin
-			--print N'Aquí va la consulta para MySQL'
+			--print N'Aquí va la consulta para SQL Server'
 			set @sql1 ='select * from openquery ('+ 
 			@servidor + 
 			',''Select Person.Person.FirstName, Person.Person.MiddleName, Person.Person.LastName ' + 

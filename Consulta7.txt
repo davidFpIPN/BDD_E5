@@ -19,20 +19,20 @@ begin
 		set @i = @i+1;
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
 		
-		if @servidor='SQLMYSQL'
+		if @servidor='LSERVER1'
 		begin
-			--print N'Aquí va la consulta para MySQL'
+			--print N'Aquí va la consulta para SQL Server'
 			set @sql1 ='select * from openquery ('+ 
 			@servidor + 
 			',''Update ' + 
 			@nom_bd + 
-			'.Sales.'+ 
+			'.dbo.'+ 
 			@nom_tabla + 
 			'set Name = ''' +
 			@nombretienda +'''' +
 			'from' + 
 			@nom_bd + 
-			'.Sales.'+ 
+			'.dbo.'+ 
 			@nom_tabla +
 			@condicion;
 
@@ -40,7 +40,7 @@ begin
 		else
 			set @sql = 'Update ' + 
 			@servidor + '.' + 
-			@nom_bd + '.Sales.'+ 
+			@nom_bd + '.dbo.'+ 
 			@nom_tabla + 
 			'set Name = ''' +
 			@nombretienda +'''' +
@@ -48,7 +48,7 @@ begin
 			@servidor + 
 			'.'+
 			@nom_bd + 
-			'.Sales.'+
+			'.dbo.'+
 			@nom_tabla +
 			@condicion;
 		

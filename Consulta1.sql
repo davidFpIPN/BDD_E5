@@ -1,5 +1,5 @@
 -- Consulta 1 
-	-- -Saber/Listar qué territorios generan más de 6 millones de dólares durante este año -> select * from Sales.SalesTerritory where SalesYTD >= 6000000; 
+	-- -Saber/Listar quï¿½ territorios generan mï¿½s de 6 millones de dï¿½lares durante este aï¿½o -> select * from Sales.SalesTerritory where SalesYTD >= 6000000; 
 
 
 alter procedure territorio_mayormoney as
@@ -20,14 +20,14 @@ begin
 		set @i = @i+1;
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
 		
-		if @servidor='SQLMYSQL'
+		if @servidor='LSERVER1'
 		begin
-			--print N'Aquí va la consulta para MySQL'
-			set @sql1 ='select * from openquery ('+ @servidor + ',''select "'+@nom_bd+'" as "Territorio" ,SalesYTD as Ventas, Name as País from ' + @nom_bd + '.' + @nom_tabla + ''+' where ' + @condicion + ''')';
+			--print N'Aquï¿½ va la consulta para SQL Server'
+			set @sql1 ='select * from openquery ('+ @servidor + ',''select "'+@nom_bd+'" as "Territorio" ,SalesYTD as Ventas, Name as Paï¿½s from ' + @nom_bd + '.dbo.' + @nom_tabla + ''+' where ' + @condicion + ''')';
 
 		end
 		else
-			set @sql = 'select '''+@nom_bd+''' as Territorio, SalesYTD as Ventas, Name as País from ' + @servidor + '.' + @nom_bd + '.Sales.'+ @nom_tabla + ' '+  'where ' + @condicion +'';
+			set @sql = 'select '''+@nom_bd+''' as Territorio, SalesYTD as Ventas, Name as Paï¿½s from ' + @servidor + '.' + @nom_bd + '.bdo.'+ @nom_tabla + ' '+  'where ' + @condicion +'';
 		
 		set @sqlt = ''+@sql +' union '+ @sql1;
 		exec sp_executesql @sqlt

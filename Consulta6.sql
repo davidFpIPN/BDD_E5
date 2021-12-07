@@ -21,14 +21,14 @@ begin
 		set @i = @i+1;
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
 		
-		if @servidor='SQLMYSQL'
+		if @servidor='LSERVER1'
 		begin
-			--print N'Aquí va la consulta para MySQL'
-			set @sql1 ='select * from openquery ('+ @servidor + ',''select "'+@nom_bd+'" as "Territorio" ,TerritoryID as "ID País", count(*) as "Cantidad de clientes" from ' + @nom_bd + '.' + @nom_tabla + ' '+ ' group by '+ @condicion +''')';
+			--print N'Aquï¿½ va la consulta para SQL Server'
+			set @sql1 ='select * from openquery ('+ @servidor + ',''select "'+@nom_bd+'" as "Territorio" ,TerritoryID as "ID Paï¿½s", count(*) as "Cantidad de clientes" from ' + @nom_bd + '.dbo' + @nom_tabla + ' '+ ' group by '+ @condicion +''')';
 
 		end
 		else
-			set @sql = 'select '''+@nom_bd+''' as Territorio,TerritoryID as "ID País", count(*) as "Cantidad de clientes" from ' + @servidor + '.' + @nom_bd + '.Sales.'+ @nom_tabla + ' '+  'group by ' + @condicion +'';
+			set @sql = 'select '''+@nom_bd+''' as Territorio,TerritoryID as "ID Paï¿½s", count(*) as "Cantidad de clientes" from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'group by ' + @condicion +'';
 		
 		set @sqlt = ''+@sql +' union '+ @sql1;
 		exec sp_executesql @sqlt
@@ -38,7 +38,7 @@ end
 exec customer_territory;
 
 /*
-select * from openquery(SQLMYSQL, 'SELECT TerritoryID as "ID País", count(*) as "Cantidad de clientes" FROM RMundo.Customer group by TerritoryID');
-select TerritoryID as ID_País ,count(*) as 'Cantidad de clientes' from SSQLSERVER11.US.Sales.Customer group by TerritoryID
+select * from openquery(SQLMYSQL, 'SELECT TerritoryID as "ID Paï¿½s", count(*) as "Cantidad de clientes" FROM RMundo.Customer group by TerritoryID');
+select TerritoryID as ID_Paï¿½s ,count(*) as 'Cantidad de clientes' from SSQLSERVER11.US.Sales.Customer group by TerritoryID
 select * from SSQLSERVER11.US.Sales.Customer 
 */

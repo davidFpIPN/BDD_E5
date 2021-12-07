@@ -1,7 +1,7 @@
-create database US
-use US;
+create database America
+use America;
 
-create table Sales.SalesTerritory(
+create table SalesTerritory(
 	TerritoryID			int not null,
 	Name				nvarchar(50) not null,
 	CountryRegionCode	nvarchar(3) not null,
@@ -15,7 +15,7 @@ create table Sales.SalesTerritory(
 	PRIMARY KEY	(TerritoryID)
 );
 
-create table Sales.SalesPerson(
+create table SalesPerson(
 	BusinessEntityID	int not null,
 	TerritoryID			int,
 	SalesQuota			money,
@@ -26,31 +26,30 @@ create table Sales.SalesPerson(
 	rowguid				uniqueidentifier not null,
 	ModifiedDate		datetime not null,
 	PRIMARY KEY (BusinessEntityID),
-	CONSTRAINT FK_TerritoryID FOREIGN KEY (TerritoryID) REFERENCES Sales.SalesTerritory(TerritoryID)
+	CONSTRAINT FK_TerritoryID FOREIGN KEY (TerritoryID) REFERENCES SalesTerritory(TerritoryID)
 );
 
-create table Sales.SalesPersonQuotaHistory(
+create table SalesPersonQuotaHistory(
 	BusinessEntityID	int not null,
 	QuotaDate			datetime not null,
 	SalesQuota			money,
 	rowguid				uniqueidentifier not null,
 	ModifiedDate		datetime not null,
 	PRIMARY KEY (BusinessEntityID,QuotaDate),
-	CONSTRAINT FK_BusinessEntityID FOREIGN KEY (BusinessEntityID) REFERENCES Sales.SalesPerson(BusinessEntityID)
+	CONSTRAINT FK_BusinessEntityID FOREIGN KEY (BusinessEntityID) REFERENCES SalesPerson(BusinessEntityID)
 );
 
-create table Sales.Store(
+create table Store(
 	BusinessEntityID	int not null,
 	Name				nvarchar(50) not null,
 	SalesPersonID		int,
-	Demographics		XML,
 	rowguid				uniqueidentifier not null,
 	ModifiedDate		datetime not null,
 	PRIMARY KEY(BusinessEntityID),
-	CONSTRAINT FK_SalesPersonID FOREIGN KEY (SalesPersonID) REFERENCES Sales.SalesPerson(BusinessEntityID)
+	CONSTRAINT FK_SalesPersonID FOREIGN KEY (SalesPersonID) REFERENCES SalesPerson(BusinessEntityID)
 );
 
-create table Sales.Customer(
+create table Customer(
 	CustomerID			int not null,
 	PersonID			int,
 	StoreID				int,
@@ -59,105 +58,67 @@ create table Sales.Customer(
 	rowguid				uniqueidentifier not null,
 	ModifiedDate		datetime not null,
 	PRIMARY KEY (CustomerID),
-	CONSTRAINT FK_StoreID FOREIGN KEY (StoreID) REFERENCES Sales.Store(BusinessEntityID),
-	CONSTRAINT FK_TerritoryIDCustomer FOREIGN KEY (TerritoryID) REFERENCES Sales.SalesTerritory(TerritoryID)
+	CONSTRAINT FK_StoreID FOREIGN KEY (StoreID) REFERENCES Store(BusinessEntityID),
+	CONSTRAINT FK_TerritoryIDCustomer FOREIGN KEY (TerritoryID) REFERENCES SalesTerritory(TerritoryID)
 );
 
+
+drop database America
 --Para America
-insert into LSERVER1.America.Sales.SalesTerritory
+insert into America.dbo.SalesTerritory
 select * 
 from AdventureWorks2019.Sales.SalesTerritory
 where TerritoryID = 1 or TerritoryID = 2 or TerritoryID = 3 or TerritoryID = 4 or TerritoryID = 5 or TerritoryID = 6 
 
 
-insert into LSERVER1.America.Sales.SalesPerson
+insert into America.dbo.SalesPerson
 select * 
 from AdventureWorks2019.Sales.SalesPerson
 where TerritoryID = 1 or TerritoryID = 2 or TerritoryID = 3 or TerritoryID = 4 or TerritoryID = 5 or TerritoryID = 6 
 
 
-insert into LSERVER1.America.Sales.Store
+insert into America.dbo.Store
 select S.BusinessEntityID,S."Name",S.SalesPersonID,S.rowguid,S.ModifiedDate from AdventureWorks2019.Sales.Store S
 join AdventureWorks2019.Sales.SalesPerson P
 on S.SalesPersonID = P.BusinessEntityID
 where TerritoryID = 1 or TerritoryID = 2 or TerritoryID = 3 or TerritoryID = 4 or TerritoryID = 5 or TerritoryID = 6 
 
 
-insert into LSERVER1.America.Sales.Customer
+insert into America.dbo.Customer
 select * from AdventureWorks2019.Sales.Customer
 where TerritoryID = 1 or TerritoryID = 2 or TerritoryID = 3 or TerritoryID = 4 or TerritoryID = 5 or TerritoryID = 6 
 
 
 
 --Para el Resto del Mundo
-INSERT INTO OPENQUERY (MYSQLODBC, 'SELECT * FROM RMundo.SalesTerritory')
+INSERT INTO OPENQUERY (LSERVER1, 'SELECT * FROM RMundo.dbo.SalesTerritory')
 select * from AdventureWorks2019.Sales.SalesTerritory
 where TerritoryID = 7 or TerritoryID = 8 or TerritoryID = 9 or TerritoryID = 10
 
-INSERT INTO OPENQUERY (MYSQLODBC, 'SELECT * FROM RMundo.SalesPerson')
+INSERT INTO OPENQUERY (LSERVER1, 'SELECT * FROM RMundo.dbo.SalesPerson')
 select * from AdventureWorks2019.Sales.SalesPerson
 where TerritoryID = 7 or TerritoryID = 8 or TerritoryID = 9 or TerritoryID = 10
 
-INSERT INTO OPENQUERY (MYSQLODBC, 'SELECT * FROM RMundo.Store')
+INSERT INTO OPENQUERY (LSERVER1, 'SELECT * FROM RMundo.dbo.Store')
 select S.BusinessEntityID,S."Name",S.SalesPersonID,S.rowguid,S.ModifiedDate from AdventureWorks2019.Sales.Store S
 join AdventureWorks2019.Sales.SalesPerson P
 on S.SalesPersonID = P.BusinessEntityID
 where TerritoryID = 7 or TerritoryID = 8 or TerritoryID = 9 or TerritoryID = 10
 
-INSERT INTO OPENQUERY (MYSQLODBC, 'SELECT * FROM RMundo.Customer')
+INSERT INTO OPENQUERY (LSERVER1, 'SELECT * FROM RMundo.dbo.Customer')
 select * from AdventureWorks2019.Sales.Customer
 where TerritoryID = 7 or TerritoryID = 8 or TerritoryID = 9 or TerritoryID = 10
 
 
-----Tercera instancia
-create database PersonInfo
-use PersonInfo
-
-create table Person (
-	BusinessEntityID	int not null,
-	PersonType			nchar(2) not null,
-	NameStyle			bit,
-	Title				nvarchar(8),
-	FirstName			nvarchar(50) not null,
-	MiddleName			nvarchar(50),
-	LastName			nvarchar(50) not null,
-	Suffix				nvarchar(10),
-	EmailPromotion		int not null,
-	rowguid				uniqueidentifier not null,
-	ModifiedDate		datetime not null
-	PRIMARY KEY (BusinessEntityID)
-);
-
-create table CreditCard (
-	CreditCardID		int not null,
-	CardType			nvarchar(50) not null,
-	CardNumber			nvarchar(25) not null,
-	ExpMonth			tinyint not null,
-	ExpYear				smallint not null,
-	ModifiedDate		datetime not null,
-	PRIMARY KEY (CreditCardID)
-);
-
-create table PersonCreditCard (
-	BusinessEntityID	int not null,
-	CreditCardID		int not null,
-	ModifiedDate		datetime not null,
-	PRIMARY KEY (BusinessEntityID,CreditCardID),
-	CONSTRAINT FK_BusinessEntityID FOREIGN KEY (BusinessEntityID) REFERENCES Person(BusinessEntityID),
-	CONSTRAINT FK_CreditCardID FOREIGN KEY (CreditCardID) REFERENCES CreditCard(CreditCardID)
-);
-
-
-insert into PersonInfo.dbo.Person 
+---Para PersonInfo
+INSERT INTO OPENQUERY (LSERVER1, 'SELECT * FROM PersonInfo.dbo.Person')
 select P.BusinessEntityID, P.PersonType, P.NameStyle, P.Title, P.FirstName, P.MiddleName, P.LastName, P.Suffix, P.EmailPromotion, P.rowguid, P.ModifiedDate
 from AdventureWorks2019.Person.Person P
 
-insert into PersonInfo.dbo.CreditCard
+INSERT INTO OPENQUERY (LSERVER1, 'SELECT * FROM PersonInfo.dbo.CreditCard')
 select * 
 from AdventureWorks2019.Sales.CreditCard
 
-insert into PersonInfo.dbo.PersonCreditCard
+INSERT INTO OPENQUERY (LSERVER1, 'SELECT * FROM PersonInfo.dbo.PersonCreditCard')
 select * 
 from AdventureWorks2019.Sales.PersonCreditCard
-
-
