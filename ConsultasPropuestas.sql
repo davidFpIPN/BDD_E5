@@ -17,14 +17,16 @@ use AdventureWorks2019;
 	-- -Saber qué encargado regional cuenta con más bonos
 	select BusinessEntityID from Sales.SalesPerson where Bonus= (select max(Bonus) from Sales.SalesPerson);
 
--- Consulta 4
-	--  Actualizar en la tabla Sales.SalesTerritory el valor de group = “North America” por “America”	
-	select * from Sales.SalesTerritory; 
-	select COUNT(*) as total_America from Sales.SalesTerritory where "Group"= 'America';
 
-	update Sales.SalesTerritory
-	set "Group" = 'North America'
-	where "Group" = 'America'; 
+-- Consulta 4
+-- Listar el numero total de personas que manejan cada tarjeta (este es opcional puede ser la una o la otra)
+
+		select count(*) as TotalXTarjeta, Sales.CreditCard.CardType
+		from Sales.CreditCard join Sales.PersonCreditCard
+		on Sales.PersonCreditCard.CreditCardID = Sales.CreditCard.CreditCardID
+		group by CardType;
+
+	
 	
 -- Consulta 5
 	-- Saber/listar la cantidad de consumidores por territorio
@@ -59,12 +61,6 @@ use AdventureWorks2019;
 		join Sales.CreditCard on Sales.PersonCreditCard.CreditCardID = Sales.CreditCard.CreditCardID 
 		where Sales.CreditCard.CardType = 'ColonialVoice' and Person.Person.EmailPromotion = 1;
 
--- Listar el numero total de personas que manejan cada tarjeta (este es opcional puede ser la una o la otra)
-
-		select count(*) as TotalXTarjeta, Sales.CreditCard.CardType
-		from Sales.CreditCard join Sales.PersonCreditCard
-		on Sales.PersonCreditCard.CreditCardID = Sales.CreditCard.CreditCardID
-		group by CardType;
 
 
 
