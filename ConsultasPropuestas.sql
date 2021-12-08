@@ -41,7 +41,7 @@ use AdventureWorks2019;
 
 
 -- Consulta 7
-	-- 8. Listar los usuarios que reciben promoción por email (“EmailPromotion” de la tabla Person.Person) 
+	-- 7. Listar los usuarios que reciben promoción por email (“EmailPromotion” de la tabla Person.Person) 
 	-- que tengan tarjeta de crédito “ColonialVoice” (Incolucra tabla Sales.CreditCard y Sales.PersonCreditCard)
 
 
@@ -59,7 +59,7 @@ use AdventureWorks2019;
 		join Sales.CreditCard on Sales.PersonCreditCard.CreditCardID = Sales.CreditCard.CreditCardID 
 		where Sales.CreditCard.CardType = 'ColonialVoice' and Person.Person.EmailPromotion = 1;
 
--- Listar el numero total de personas que manejan cada tarjeta 
+-- Listar el numero total de personas que manejan cada tarjeta (este es opcional puede ser la una o la otra)
 
 		select count(*) as TotalXTarjeta, Sales.CreditCard.CardType
 		from Sales.CreditCard join Sales.PersonCreditCard
