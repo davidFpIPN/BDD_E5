@@ -1,5 +1,7 @@
 -- Consulta3
 	---Saber que encargado regional cuenta con mas bonos
+	-- select BusinessEntityID from SalesPerson where Bonus= (select max(Bonus) from SalesPerson);
+
 alter procedure regional_bonos as
 begin
 	declare @servidor nvarchar(100);
@@ -18,28 +20,11 @@ begin
 		set @i = @i+1;
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
 		
-		if @servidor='LSERVER1'
-		begin
-			--print N'Aquí va la consulta para SQL Server'
-			set @sql1 ='select * from openquery ('+ 
-			@servidor + 
-			',''select BusinessEntityID from ' + 
-			@nom_bd + 
-			'.dbo.'+ 
-			@nom_tabla + 
-			''+' where '+ 
-			@condicion + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ')' + + ''')';
+			set @sql = 'select BusinessEntityID as "Encargado Regional" , TerritoryID as Territorio, Bonus as Bonos from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'where ' + @condicion + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ')';
 
-		end
-		else
-			set @sql = 'select BusinessEntityID from ' + 
-			@servidor + '.' + 
-			@nom_bd + '.dbo.'+ 
-			@nom_tabla + ' '+  'where ' + 
-			@condicion + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ')';
+
 		
-		set @sqlt = ''+@sql +' union '+ @sql1;
-		exec sp_executesql @sqlt
+		exec sp_executesql @sql
 		end 
 end
 
