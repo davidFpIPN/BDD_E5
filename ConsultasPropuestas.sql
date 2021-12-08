@@ -56,8 +56,8 @@ use AdventureWorks2019;
 
 	select Person.Person.FirstName, Person.Person.LastName, Person.Person.EmailPromotion, Person.Person.BusinessEntityID, 
 		Sales.CreditCard.CardType 
-		from Person.Person join Sales.PersonCreditCard
-		on Person.Person.BusinessEntityID = Sales.PersonCreditCard.BusinessEntityID
+		from Person.Person 
+		join Sales.PersonCreditCard on Person.Person.BusinessEntityID = Sales.PersonCreditCard.BusinessEntityID
 		join Sales.CreditCard on Sales.PersonCreditCard.CreditCardID = Sales.CreditCard.CreditCardID 
 		where Sales.CreditCard.CardType = 'ColonialVoice' and Person.Person.EmailPromotion = 1;
 
