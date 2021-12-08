@@ -36,4 +36,20 @@ END
 
 exec EliminarCliente @NumeroCuenta ='AW00000002';
 
+/* Para insertar los tatos de nuevo me base en la tabla original Sales.Customer de AW2019
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) [CustomerID]
+      ,[PersonID]
+      ,[StoreID]
+      ,[TerritoryID]
+      ,[AccountNumber]
+      ,[rowguid]
+      ,[ModifiedDate]
+  FROM [America].[dbo].[Customer]
+
+  	delete from Customer where AccountNumber='AW00000001'
+
+	insert into Customer values (1,NULL, 934,1,'AW00000001','3F5AE95E-B87D-4AED-95B4-C3797AFCB74F','2014-09-12 11:15:07.263');
+	insert into Customer values (2,NULL, 1028,1,'AW00000002','E552F657-A9AF-4A7D-A645-C429D6E02491','2014-09-12 11:15:07.263'); 
+*/
 
