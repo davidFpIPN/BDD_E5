@@ -2,6 +2,7 @@
 	-- Saber/Listar en qu� territorios se vendi� m�s de 3 millones el a�o pasado
 	select * from Sales.SalesTerritory where SalesLastYear > 3000000; 
 
+
 alter procedure territorio_mayor_aniopast as
 begin
 	declare @servidor nvarchar(100);
@@ -20,17 +21,9 @@ begin
 		set @i = @i+1;
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
 		
-		if @servidor='LSERVER1'
-		begin
-			--print N'Aqu� va la consulta para SQL Server'
-			set @sql1 ='select * from openquery ('+ @servidor + ',''select "'+@nom_bd+'" as "Territorio" ,SalesLastYear as "Ventas A�o Pasado", Name as Pa�s from ' + @nom_bd + '.dbo.' + @nom_tabla + ''+' where ' + @condicion + ''')';
-
-		end
-		else
-			set @sql = 'select '''+@nom_bd+''' as Territorio, SalesLastYear as "Ventas A�o Pasado", Name as Pa�s from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'where ' + @condicion +'';
+			set @sql = 'select '''+@nom_bd+''' as Territorio, SalesLastYear as "Ventas Año Pasado", Name as País from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'where ' + @condicion +'';
 		
-		set @sqlt = ''+@sql +' union '+ @sql1;
-		exec sp_executesql @sqlt
+		exec sp_executesql @sql
 		end 
 end
 
