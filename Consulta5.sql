@@ -1,4 +1,4 @@
--- Consulta 6
+-- Consulta 5
 	-- Saber/listar la cantidad de consumidores por territorio
 	/*select distinct TerritoryID, count(*) as 'Cantidad de clientes' from AdventureWorks2019.Sales.Customer 
 	group by TerritoryID*/
