@@ -18,7 +18,7 @@ use AdventureWorks2019;
 	select BusinessEntityID from Sales.SalesPerson where Bonus= (select max(Bonus) from Sales.SalesPerson);
 
 -- Consulta 4
-	--  Actualizar en la tabla Sales.SalesTerritory el valor de groy = “North America” por “America”	
+	--  Actualizar en la tabla Sales.SalesTerritory el valor de group = “North America” por “America”	
 	select * from Sales.SalesTerritory; 
 	select COUNT(*) as total_America from Sales.SalesTerritory where "Group"= 'America';
 
@@ -26,7 +26,6 @@ use AdventureWorks2019;
 	set "Group" = 'North America'
 	where "Group" = 'America'; 
 	
-	select * from Person.Person;
 -- Consulta 5
 	-- Saber/listar la cantidad de consumidores por territorio
 	select distinct TerritoryID, count(*) as 'Cantidad de clientes' from AdventureWorks2019.Sales.Customer 
@@ -100,11 +99,11 @@ use AdventureWorks2019;
 	where Sales.SalesPerson.BusinessEntityID = 275; 
 
 -- Consulta 11
-	-- . Eliminar productos dentro de un pedido 
-	DELETE FROM Sales.SalesOrderDetail WHERE ProductID Between 740 and 750;
+	-- Listar el nombre de los encargados regionales (usando la tabla Sales.Person)
 
 -- Consulte 12
 	-- .Eliminar cliente con número de cuenta AW00000001
 	delete from Sales.Customer where AccountNumber='AW00000001'
+
 
 
