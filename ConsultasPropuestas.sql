@@ -14,8 +14,17 @@ use AdventureWorks2019;
 
 
 -- Consulta 3
+	-- Consulta 3
 	-- -Saber qué encargado regional cuenta con más bonos
-	select BusinessEntityID from Sales.SalesPerson where Bonus= (select max(Bonus) from Sales.SalesPerson);
+
+	select * from Person.Person; 
+	select * from Sales.SalesPerson;
+	-- tienen en comun BusinessEntity
+
+	select Sales.SalesPerson.BusinessEntityID, Person.Person.FirstName, Person.Person.LastName
+	from Sales.SalesPerson join Person.Person
+	on Sales.SalesPerson.BusinessEntityID = Person.Person.BusinessEntityID
+	where Bonus= (select max(Bonus) from Sales.SalesPerson);
 
 
 -- Consulta 4
