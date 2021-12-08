@@ -19,7 +19,7 @@ use AdventureWorks2019;
 
 
 -- Consulta 4
--- Listar el numero total de personas que manejan cada tarjeta (este es opcional puede ser la una o la otra)
+-- Listar el numero total de personas que manejan cada tarjeta
 
 		select count(*) as TotalXTarjeta, Sales.CreditCard.CardType
 		from Sales.CreditCard join Sales.PersonCreditCard
