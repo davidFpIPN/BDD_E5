@@ -1,3 +1,5 @@
+Consulta 11
+- Listar el nombre de los encargados regionales (usando la tabla Sales.Person)
 alter procedure name_encargados  as
 begin
 	declare @servidor nvarchar(100);
