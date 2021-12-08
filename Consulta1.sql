@@ -20,18 +20,11 @@ begin
 		set @i = @i+1;
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
 		
-		if @servidor='LSERVER1'
-		begin
-			--print N'Aqu� va la consulta para SQL Server'
-			set @sql1 ='select * from openquery ('+ @servidor + ',''select "'+@nom_bd+'" as "Territorio" ,SalesYTD as Ventas, Name as Pa�s from ' + @nom_bd + '.dbo.' + @nom_tabla + ''+' where ' + @condicion + ''')';
-
-		end
-		else
-			set @sql = 'select '''+@nom_bd+''' as Territorio, SalesYTD as Ventas, Name as Pa�s from ' + @servidor + '.' + @nom_bd + '.bdo.'+ @nom_tabla + ' '+  'where ' + @condicion +'';
+			set @sql = 'select '''+@nom_bd+''' as Territorio, SalesYTD as Ventas, Name as País from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'where ' + @condicion +'';
 		
-		set @sqlt = ''+@sql +' union '+ @sql1;
-		exec sp_executesql @sqlt
-		end 
+	
+		exec sp_executesql @sql
+	end 
 end
 
 exec territorio_mayormoney;
