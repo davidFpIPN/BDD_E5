@@ -1,0 +1,55 @@
+{{!-- Eliminar clientes de la BD por su número de cuenta --}}
+
+<h3> Eliminar clientes de la BD por su número de cuenta</h3>
+<hr/>
+
+
+<label for="AccountNum" class="form-label"> Número de cuenta del cliente </label>
+<div class="input-group flex-nowrap">
+<span class="input-group-text" id="addon-wrapping">#</span>
+<input id="AccountNum" value="" type="text" class="form-control" placeholder="AW00000000" aria-label="Account" aria-describedby="addon-wrapping" onchange="funcCuenta(this.value)">
+<button id="buttonSub" type="submit" class="btn btn-danger">Eliminar</button>
+</div>
+
+<!-- Button trigger modal -->
+<button id="mensaje" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;">
+  
+</button>
+
+
+
+{{#if messages}}
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Información</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{messages}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    const mens = document.getElementById('mensaje');
+    mens.click();
+</script>
+{{/if }}
+
+<script>
+    let numCuenta = '';
+    const funcCuenta = (acc)=>{
+        numCuenta = acc.toString();
+    }
+    const butSub = document.getElementById('buttonSub');
+    butSub.addEventListener("click", ()=>{
+        window.location.href= `/ednc/?ncuenta=${numCuenta}`;
+    })
+</script>

@@ -1,0 +1,21 @@
+{{!-- Listar qué territorios generan más de 6MDD en este año --}}
+<h3> Lista de territorios que generan más de 6MDD en este año</h3>
+<hr/>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Territorio</th>
+      <th scope="col">Ventas</th>
+      <th scope="col">País</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each data}}
+    <tr>
+      <td> {{Territorio}} </td>
+      <td> {{Ventas}} </td>
+      <td> {{Pais}} </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

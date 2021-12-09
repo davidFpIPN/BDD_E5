@@ -2,7 +2,10 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-handlebars": "^5.3.4",
-    "rest-mssql-nodejs": "^1.0.10"
+    "msnodesqlv8": "^2.4.3",
+    "mssql": "^6.3.2",
+    "rest-mssql-nodejs": "^1.0.10",
+    "socket.io": "^4.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

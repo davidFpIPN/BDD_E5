@@ -1,0 +1,19 @@
+{{!-- Listar el numero total de personas que manejan cada tarjeta --}}
+<h3> Lista del total de usuarios de cada tipo de tarjeta</h3>
+<hr/>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Usuarios del tipo de tarjeta</th>
+      <th scope="col">Tipo de tarjeta</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each data}}
+    <tr>
+      <td> {{TotalXTarjeta}} </td>
+      <td> {{CardType}} </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

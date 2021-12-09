@@ -1,0 +1,78 @@
+{{!-- 
+Aquí se van a editar los siguientes valores 
+1. Actualizar el nombre de la tienda “Tire Company” por “Wire Company”
+2. Modificar el bono del encargado regional que tenga el mayor número de ventas de este año.
+3. Modificar/Actualizar el bono de un encargado regional que no haya vendido nada el año pasado.
+--}}
+<h3> Actualizar las diferentes acciones que se enlistan</h3>
+<hr/>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Acción</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Actualizar el nombre de la tienda “Tire Company” por “Wire Company”</td>
+      <td>
+          <div class="d-grid gap-1">
+              <a href="/ant"><button type="button" class="btn btn-outline-warning">Actualizar</button></a>
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Modificar el bono del encargado regional que tenga el mayor número de ventas de este año.</td>
+      <td>
+           <div class="d-grid gap-1">
+              <a href="/abmv"><button type="button" class="btn btn-outline-warning">Actualizar</button></a>
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Actualizar el bono de un encargado regional que no haya vendido nada el año pasado.</td>
+      <td>
+           <div class="d-grid gap-1">
+              <a href="/absv"><button type="button" class="btn btn-outline-warning">Actualizar</button></a>
+          </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<button id="mensaje" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;">
+  
+</button>
+
+
+
+{{#if messages}}
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Información</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{messages}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    const mens = document.getElementById('mensaje');
+    mens.click();
+</script>
+{{/if }}

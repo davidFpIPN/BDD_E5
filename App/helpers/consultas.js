@@ -2,44 +2,109 @@ const rest = new (require('rest-mssql-nodejs'))({
     user: 'DavidPruebas',
     password: 'DavidPruebas',
     server: 'DESKTOP-A8FTTBG',
-    database: 'AdventureWorks2019' 
+    database: 'America' 
 });
 
-const getMoreSold = async() =>{
-    const qry = "select distinct top 70 ST.Name as 'Tienda', SP.SalesYTD as 'Ventas' from AdventureWorks2019.Sales.SalesPerson SP join AdventureWorks2019.Sales.Store ST on ST.SalesPersonID = SP.BusinessEntityID order by SP.SalesYTD Desc";
-    const execQuery = await rest.executeQuery(qry);
-    return execQuery.data[0];
-    
+const getMayorVentas = async()=>{
+    const procedureName = 'territorio_mayormoney';
+    const execProc = await rest.executeStoredProcedure(procedureName);
+    return execProc.data[0];
 }
 
-const getFewerSold = async() => {
-    const qry = "select distinct ST.Name as 'Tienda', SP.SalesYTD as 'Ventas' from AdventureWorks2019.Sales.SalesPerson SP join AdventureWorks2019.Sales.Store ST on ST.SalesPersonID = SP.BusinessEntityID where ST.BusinessEntityID >= 1977  order by SP.SalesYTD Desc"
-    const execQuery = await rest.executeQuery(qry);
-    return execQuery.data[0];
+const getMayorVentasAp = async()=>{
+    const procedureName = 'territorio_mayor_aniopast';
+    const execProc = await rest.executeStoredProcedure(procedureName);
+    return execProc.data[0];
 }
 
-const getSalesByTerritory = async() => {
-    const qry = "select T.Name, T.SalesYTD from AdventureWorks2019.Sales.SalesTerritory T order by T.SalesYTD desc"
-    const execQuery = await rest.executeQuery(qry);
-    return execQuery.data[0];
+const getTotalXTarjeta = async()=>{
+    const procedureName = 'PersonasXTarjeta';
+    const execProc = await rest.executeStoredProcedure(procedureName);
+    return execProc.data[0];
 }
 
-const getIncreaseSoldManager = async() => {
-    const qry = "select S.BusinessEntityID, (S.SalesYTD - S.SalesLastYear) as 'Crecimiento' from AdventureWorks2019.Sales.SalesPerson S order by 2 desc"
-    const execQuery = await rest.executeQuery(qry);
-    return execQuery.data[0];
+const getConsumidoresPT = async()=>{
+    const procedureName = 'customer_territory';
+    const execProc = await rest.executeStoredProcedure(procedureName);
+    return execProc.data[0];
 }
 
-const getIncreaseSoldStore = async() => {
-    const qry = "select distinct ST.Name as 'Tienda', (SP.SalesYTD - SP.SalesLastYear) as 'Crecimiento' from AdventureWorks2019.Sales.SalesPerson SP join AdventureWorks2019.Sales.Store ST on ST.SalesPersonID = SP.BusinessEntityID order by 2 desc"
-    const execQuery = await rest.executeQuery(qry);
-    return execQuery.data[0];
+
+const getBonosPR = async()=>{
+    const procedureName = 'regional_bonos';
+    const execProc = await rest.executeStoredProcedure(procedureName);
+    return execProc.data[0];
 }
+
+
+const getTiendasEnc = async()=>{
+    const procedureName = 'TiendasXEncargado';
+    const execProc = await rest.executeStoredProcedure(procedureName, null, {
+        id_tienda: 275
+    });
+    return execProc.data[0];
+}
+
+const getNomEnc = async()=>{
+    const procedureName = 'name_encargados';
+    const execProc = await rest.executeStoredProcedure(procedureName);
+    return execProc.data[0];
+}
+
+const getUsersPromo = async(offset)=>{
+    const procedureName = 'usuarios_promocion';
+    const execProc = await rest.executeStoredProcedure(procedureName, null, {
+        offs: offset
+    });
+    return execProc.data[0];
+}
+
+const actNomTi = async()=>{
+    const procedureName = 'cambiar_nombre';
+    const execProc = await rest.executeStoredProcedure(procedureName);
+    //return execProc.data[0];
+    /*console.log(execProc.data[0]);
+    console.log(execProc.data[1]);*/
+}
+
+const actBMV = async()=>{
+    const procedureName = 'Bonos_MasVentas';
+    const execProc = await rest.executeStoredProcedure(procedureName);
+    //return execProc.data[0];
+    /*console.log(execProc.data[0]);
+    console.log(execProc.data[1]);*/
+}
+
+const actBMenV = async()=>{
+    const procedureName = 'Bonos_MenosVentas';
+    const execProc = await rest.executeStoredProcedure(procedureName);
+    //return execProc.data[0];
+    /*console.log(execProc.data[0]);
+    console.log(execProc.data[1]);*/
+}
+
+const deleteAccount = async(account )=>{
+    const procedureName = 'EliminarCliente';
+    const execProc = await rest.executeStoredProcedure(procedureName, null, {
+        NumeroCuenta: account
+    });
+    console.log(execProc.data[0]);
+    console.log(execProc.data[1])
+}
+// ---------------------------------
+
 
 module.exports = {
-    "getMoreSold": getMoreSold,
-    "getFewerSold": getFewerSold,
-    "getSalesByTerritory": getSalesByTerritory,
-    "getIncreaseSoldManager": getIncreaseSoldManager,
-    "getIncreaseSoldStore": getIncreaseSoldStore,
+    "getMayorVentas": getMayorVentas,
+    "getMayorVentasAp":getMayorVentasAp,
+    "getTotalXTarjeta":getTotalXTarjeta,
+    "getConsumidoresPT":getConsumidoresPT,
+    "getTiendasEnc":getTiendasEnc,
+    "getNomEnc":getNomEnc,
+    "getUsersPromo":getUsersPromo,
+    "getBonosPR":getBonosPR,
+    "actNomTi":actNomTi,
+    "actBMV":actBMV,
+    "actBMenV":actBMenV,
+    "deleteAccount":deleteAccount,    
 }

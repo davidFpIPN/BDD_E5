@@ -1,0 +1,22 @@
+{{!-- Listar las tiendas al cargo del encargado regional (SalesPerson) con ID 275 --}}
+
+<h3> Lista de las tiendas al cargo del encargado regional con ID 275</h3>
+<hr/>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID tienda</th>
+      <th scope="col">Nombre de la tienda</th>
+      <th scope="col">ID encargado regional</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each data}}
+    <tr>
+      <td> {{SBEI}} </td>
+      <td> {{Name}} </td>
+      <td> {{SPBEI}} </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

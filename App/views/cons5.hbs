@@ -1,0 +1,21 @@
+{{!-- Listar la cantidad de consumidores por territorio --}}
+<h3> Lista de la cantidad de consumidores por territorio</h3>
+<hr/>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Territorio</th>
+      <th scope="col">ID País</th>
+      <th scope="col">Cantidad de clientes</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each data}}
+    <tr>
+      <td> {{Territorio}} </td>
+      <td> {{IDP}} </td>
+      <td> {{Clientes}} </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
