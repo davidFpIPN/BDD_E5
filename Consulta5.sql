@@ -9,21 +9,23 @@ begin
 	declare @nom_bd nvarchar(100);
 	declare @nom_tabla nvarchar(100);
 	declare @sql nvarchar(1000);
-	declare @sql1 nvarchar(1000);
-	declare @sqlt nvarchar(1000);
-	declare @condicion varchar(200);
+declare @condicion varchar(200);
 	declare @i int = 0;
 	set @condicion ='TerritoryID'
 	set  @nom_tabla='Customer';
+
+	CREATE TABLE #VentasCpt (Territorio  varchar(25), IDP int, Clientes int);
 
 	while @i<2
 	begin
 		set @i = @i+1;
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
 		
-			set @sql = 'select '''+@nom_bd+''' as Territorio,TerritoryID as "ID País", count(*) as "Cantidad de clientes" from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'group by ' + @condicion +'';
+		set @sql = N'insert into #VentasCpt (Territorio, IDP, Clientes) (select '''+@nom_bd+''' as Territorio,TerritoryID as "ID País", count(*) as "Cantidad de clientes" from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'group by ' + @condicion +')';
+		
 		exec sp_executesql @sql
-		end 
+	end 
+	select * from #VentasCpt;
 end
 
 exec customer_territory;

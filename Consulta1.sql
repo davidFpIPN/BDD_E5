@@ -8,24 +8,23 @@ begin
 	declare @nom_bd nvarchar(100);
 	declare @nom_tabla nvarchar(100);
 	declare @sql nvarchar(1000);
-	declare @sql1 nvarchar(1000);
-	declare @sqlt nvarchar(1000);
 	declare @condicion varchar(200);
 	declare @i int = 0;
 	set @condicion ='SalesYTD >= 6000000'
 	set  @nom_tabla='SalesTerritory';
-
+	
+	CREATE TABLE #VentasTemp (Territorio  varchar(25), Ventas MONEY, Pais varchar(25));
+	
 	while @i<2
 	begin
 		set @i = @i+1;
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
-		
-			set @sql = 'select '''+@nom_bd+''' as Territorio, SalesYTD as Ventas, Name as País from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'where ' + @condicion +'';
-		
-	
-		exec sp_executesql @sql
+		set @sql = N'insert into #VentasTemp(Territorio, Ventas, Pais) (select '''+@nom_bd+''', SalesYTD, Name from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' where ' + @condicion +')';
+		exec sp_executesql @sql		
 	end 
+	select * from #VentasTemp;
 end
+
 
 exec territorio_mayormoney;
 

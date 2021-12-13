@@ -12,7 +12,7 @@ begin
 	declare @sqlt nvarchar(1000);
 	declare @condicion varchar(200);
 	declare @i int = 0;
-	set @condicion ='Name = ''Tire Company'''
+	set @condicion ='Name = ''Wire Company'''
 	set  @nom_tabla='Store';
 
 	while @i<2
@@ -23,7 +23,7 @@ begin
 		set @sql = 'Update '+ @nom_tabla + ' set Name = ''Tired Company'' from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '
 		+  'where ' + @condicion;
 		select @sql;
-		exec sp_executesql @sql
+		--exec sp_executesql @sql
 	end 
 end
 

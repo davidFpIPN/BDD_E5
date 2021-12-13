@@ -28,7 +28,7 @@ begin
 	DECLARE @i int = 0; 
 	
 
-	SET @columnas = ' Store.BusinessEntityID, Store.Name, SalesPerson.BusinessEntityID ';
+	SET @columnas = ' Store.BusinessEntityID as SBEI, Store.Name, SalesPerson.BusinessEntityID as SPBEI';
 
 	while @i<2
 	begin

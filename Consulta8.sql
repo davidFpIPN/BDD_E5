@@ -24,5 +24,6 @@ begin
 			set @sql = 'Update '+ @nom_tabla + ' set Bonus = 8000.00 from ' + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'where ' + @condicion + @servidor + '.' + @nom_bd + '.dbo.'+ @nom_tabla +')';
 		select @sql;
 		exec sp_executesql @sql
+		--select @sql
 		end 
 end

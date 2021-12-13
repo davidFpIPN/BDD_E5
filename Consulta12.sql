@@ -29,8 +29,8 @@ BEGIN
 		set @sql = 'delete '+ 'from ' +  '[' + @servidor +']'+ '.' + @nom_bd + '.dbo.'+ @nom_tabla + ' '+  'where AccountNumber = '''+ @NumeroCuenta +''';' ; 
 
 		
-		exec sp_executesql @sql
-		print @sql;
+		--exec sp_executesql @sql
+		select @sql;
 		end 
 END
 

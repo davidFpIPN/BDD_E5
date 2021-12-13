@@ -9,7 +9,7 @@ select P.FirstName, P.LastName, P.EmailPromotion, P.BusinessEntityID, CC.CardTyp
 	where CC.CardType = 'ColonialVoice' and P.EmailPromotion = 1;
 
 go
-alter procedure usuarios_promocion as
+alter procedure usuarios_promocion @offs nvarchar(5) = '0' as
 begin
 	declare @servidor nvarchar(100);
 	declare @nom_bd nvarchar(100);
@@ -33,10 +33,11 @@ begin
 	+ ' from ' + @servidor + '.' + @nom_bd + '.dbo.' + @nom_tabla1 
 	+ ' join ' + @servidor + '.' + @nom_bd + '.dbo.' + @nom_tabla2 + ' on ' + @nom_tabla1 + '.BusinessEntityID = ' + @nom_tabla2 + '.BusinessEntityID'
 	+ ' join ' + @servidor + '.' + @nom_bd + '.dbo.' + @nom_tabla3 + ' on ' + @nom_tabla2 + '.CreditCardID = ' + @nom_tabla3 + '.CreditCardID '
-	+ ' where ' + @condicion
+	+ ' where ' + @condicion + ' order by CardType asc'
+	+ ' OFFSET '+ @offs +' ROWS FETCH NEXT 100 ROWS ONLY'
 	
-	select @sql;
+	--select @sql;
 	exec sp_executesql @sql	
 end
 
-exec usuarios_promocion
+exec usuarios_promocion @offs = '900'

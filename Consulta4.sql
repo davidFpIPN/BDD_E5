@@ -28,6 +28,5 @@ begin
 	exec sp_executesql @sql
 	print @sql;
 
-end 
-
+end
 exec PersonasXTarjeta; 

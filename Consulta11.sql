@@ -1,5 +1,5 @@
-Consulta 11
-- Listar el nombre de los encargados regionales (usando la tabla Sales.Person)
+/*Consulta 11
+- Listar el nombre de los encargados regionales (usando la tabla Sales.Person)*/
 alter procedure name_encargados  as
 begin
 	declare @servidor nvarchar(100);
@@ -14,35 +14,19 @@ begin
 	set @condicion =' where BusinessEntityID between 274 and 290';
 	set  @nom_tabla='Person';
 
-	while @i<2
-	begin
 		set @i = @i+1;
-		select @servidor = servidor, @nom_bd = bd from diccionario_dist where id_fragmento = @i;
+		select @servidor = servidor, @nom_bd = bd from diccionario_dist where bd='PersonInfo';
 		
-		if @servidor='LSERVER1'
-		begin
-			--print N'Aquí va la consulta para SQL Server'
-			set @sql1 ='select * from openquery ('+ 
-			@servidor + 
-			',''Select Person.Person.FirstName, Person.Person.MiddleName, Person.Person.LastName ' + 
-			'from '+
-			@nom_bd + 
-			'.Person.'+ 
-			@nom_tabla + 
-			@condicion;
-
-		end
-		else
-			set @sql = 'Select Person.Person.FirstName, Person.Person.MiddleName, Person.Person.LastName ' + 
+		set @sql = 'Select FirstName, MiddleName, LastName ' + 
 			' from '+
 			@servidor + '.' + 
-			@nom_bd + '.Person.'+ 
+			@nom_bd + '.dbo.'+ 
 			@nom_tabla + 
 			@condicion;
 		
-		set @sqlt = ''+@sql +' union '+ @sql1;
-		exec sp_executesql @sqlt
-		end 
+		exec sp_executesql @sql
+		--select @sql
+		 
 end
 
 exec name_encargados;

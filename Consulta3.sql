@@ -14,17 +14,16 @@ begin
 	DECLARE @nom_tabla varchar (100);
 	DECLARE @columnas varchar (500); 
 
+	DECLARE @IDENTIF int;
+	
 	DECLARE @condicion varchar (100); 
 	DECLARE @i int = 0; 
 	DECLARE @tabla1 varchar (100);
 	DECLARE @tabla2 varchar (100);
 	SET @tabla1 = 'SalesPerson';
-	SET @tabla2 = 'LSERVER2.PersonInfo.dbo.Person'
+	SET @tabla2 = 'LSERVER1.PersonInfo.dbo.Person'
 
-	--select Sales.SalesPerson.BusinessEntityID, Person.Person.FirstName, Person.Person.LastName
-	--from Sales.SalesPerson join Person.Person
-	--on Sales.SalesPerson.BusinessEntityID = Person.Person.BusinessEntityID
-	--where Bonus= (select max(Bonus) from Sales.SalesPerson);
+	CREATE TABLE #BonosPReg(Territorio  varchar(25), ID int, FirstName varchar(25), LastName varchar(25));
 
 	SET @columnas = ' SalesPerson.BusinessEntityID, Person.FirstName, Person.LastName ';
 	
@@ -34,18 +33,19 @@ begin
 		select @servidor = servidor, @nom_bd = bd from diccionario_dist where  id_fragmento= @i; 
 
 
-		set @sql = 'select ' + @columnas + ' from ' 
+		set @sql = N'insert into #BonosPReg(ID , FirstName, LastName)'+
+		'( select ' + @columnas + ' from ' 
 		+ '[' + @servidor +']'+'.'+ @nom_bd + '.dbo.' + @tabla1 +' join '
 		+ @tabla2
 		+ ' on ' +@tabla1+'.BusinessEntityID = Person.BusinessEntityID '
-		+ 'where Bonus = (select max(Bonus) from ' + '[' + @servidor +']'+'.'+ @nom_bd + '.dbo.' + @tabla1 +')'; 
-		
-		
+		+ 'where Bonus = (select max(Bonus) from ' + '[' + @servidor +']'+'.'+ @nom_bd + '.dbo.' + @tabla1 +'))'; 
+				
 		exec sp_executesql @sql
-		print @sql;
+		SELECT @IDENTIF = ID FROM #BonosPReg
+		--SELECT @sql;
+		update #BonosPReg set Territorio = @nom_bd where ID = @IDENTIF;
 
 	end
-
+	select * from #BonosPReg
 end
-
 exec regional_bonos;
