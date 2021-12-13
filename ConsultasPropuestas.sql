@@ -105,6 +105,9 @@ use AdventureWorks2019;
 
 -- Consulta 11
 	-- Listar el nombre de los encargados regionales (usando la tabla Sales.Person)
+	select Person.Person.FirstName, Person.Person.MiddleName, Person.Person.LastName 
+	from Person.Person
+	where BusinessEntityID between 274 and 290;
 
 -- Consulte 12
 	-- .Eliminar cliente con número de cuenta AW00000001
