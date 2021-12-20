@@ -7,8 +7,6 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const consultas = require('./helpers/consultas');
 
-const dbConnect = require('./helpers/consultas')
-
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
     defaultLayout: 'main',
@@ -28,6 +26,7 @@ app.get("/", (req, res)=>{
 
 app.get("/mvt", async(req, res) => {
     const data = await consultas.getMayorVentas();
+    //console.log(data);
     res.render('cons1',{ data })
 })
 
@@ -99,7 +98,8 @@ app.get("/dela", (req, res) => {
 
 app.get("/ednc", async(req, res) => {
     const acc = req.query.ncuenta;
-    await consultas.deleteAccount(acc);
+    const data = await consultas.deleteAccount(acc);
+    console.log(data);
     messages=`Se eliminó al cliente con número de cuenta ${acc}`;
     res.redirect('/dela');
 })

@@ -8,6 +8,7 @@ const rest = new (require('rest-mssql-nodejs'))({
 const getMayorVentas = async()=>{
     const procedureName = 'territorio_mayormoney';
     const execProc = await rest.executeStoredProcedure(procedureName);
+    //console.log(execProc);
     return execProc.data[0];
 }
 
@@ -88,8 +89,6 @@ const deleteAccount = async(account )=>{
     const execProc = await rest.executeStoredProcedure(procedureName, null, {
         NumeroCuenta: account
     });
-    console.log(execProc.data[0]);
-    console.log(execProc.data[1])
 }
 // ---------------------------------
 
